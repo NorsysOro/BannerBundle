@@ -1,0 +1,6 @@
+norsys:
+    banner:
+        unique_banner_constraint:
+            error: Il existe déjà une bannière avec ces contraintes
+        dates:
+            error: La date de fin doit être après la date de début

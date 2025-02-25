@@ -1,0 +1,8 @@
+Norsys\Bundle\BannerBundle\Entity\Banner:
+    constraints:
+        - Norsys\Bundle\BannerBundle\Validator\Constraints\BannerDates: ~
+    properties:
+        title:
+            - NotBlank: ~
+        start:
+            - NotBlank: ~

@@ -1,0 +1,30 @@
+{% block _norsys_banner_widget %}
+    {% if banner is defined and banner is not null %}
+        {% set bannerIsSticky = banner.sticky %}
+        {% set localizedLink = banner.localizedLinks|localized_value %}
+
+        <div class="norsys-banner"
+             role="alert"
+             style="background-color: {{ banner.backgroundColor }}"
+             data-page-component-module="norsysbanner/blank/js/app/views/norsys-banner/banner.js"
+             data-page-component-options="{{ {
+                 isSticky: bannerIsSticky,
+             }|json_encode }}"
+        >
+            <div class="norsys-banner__container">
+                <span class="{{ banner.icon }} norsys-banner__icon" aria-hidden="true"></span>
+                {% if localizedLink is not same as "" %}
+                    <a class="norsys-banner__link"
+                       id="norsys_banner_link"
+                       href="{{ localizedLink }}"
+                       target="_blank"
+                    >
+                        {{ banner.localizedContents|localized_value|raw }}
+                    </a>
+                {% else %}
+                    {{ banner.localizedContents|localized_value|raw }}
+                {% endif %}
+            </div>
+        </div>
+    {% endif %}
+{% endblock %}

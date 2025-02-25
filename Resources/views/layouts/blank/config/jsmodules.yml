@@ -1,0 +1,3 @@
+dynamic-imports:
+    norsysbanner:
+        - norsysbanner/blank/js/app/views/norsys-banner/banner.js

@@ -1,0 +1,4 @@
+norsys_banner:
+    resource: '@NorsysBannerBundle/Controller/Admin/BannerController.php'
+    type: annotation
+    prefix: /banner

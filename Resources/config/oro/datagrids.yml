@@ -1,0 +1,76 @@
+datagrids:
+    banner-grid:
+        actions:
+            view:
+                type: navigate
+                label: oro.grid.action.view
+                link: view_link
+                icon: eye
+                acl_resource: norsys_banner_view
+                rowAction: true
+        acl_resource: norsys_banner_view
+        extended_entity_name: 'Norsys\Bundle\BannerBundle\Entity\Banner'
+        options:
+            entityHint: norsys.banner.entity_plural_label
+            entity_pagination: true
+        source:
+            type: orm
+            query:
+                select:
+                    - banner.id
+                    - banner.title
+                    - banner.enabled
+                    - banner.priority
+                    - banner.start
+                    - banner.end
+                from:
+                    - { table: 'Norsys\Bundle\BannerBundle\Entity\Banner', alias: banner }
+        columns:
+            title:
+                label: norsys.banner.title.label
+            enabled:
+                label: norsys.banner.enabled.label
+            priority:
+                label: norsys.banner.priority.label
+            start:
+                label: norsys.banner.start.label
+                frontend_type: datetime
+            end:
+                label: norsys.banner.end.label
+                frontend_type: datetime
+        properties:
+            id: ~
+            title: ~
+            view_link:
+                type: url
+                route: norsys_banner_view
+                params: [ id ]
+        sorters:
+            columns:
+                title:
+                    data_name: banner.title
+                priority:
+                    data_name: banner.priority
+                start:
+                    data_name: banner.start
+                end:
+                    data_name: banner.end
+                enabled:
+                    data_name: banner.enabled
+        filters:
+            columns:
+                title:
+                    type: string
+                    data_name: banner.title
+                enabled:
+                    type: boolean
+                    data_name: banner.enabled
+                priority:
+                    type: number
+                    data_name: banner.priority
+                start:
+                    type: datetime
+                    data_name: banner.start
+                end:
+                    type: datetime
+                    data_name: banner.end

@@ -1,0 +1,70 @@
+{% extends '@OroUI/actions/view.html.twig' %}
+{% import '@OroUI/macros.html.twig' as UI %}
+{% import '@OroScope/macros.html.twig' as scope %}
+
+{% oro_title_set({params : {"%entityLabel%": entity } }) %}
+
+{% block pageHeader %}
+    {% set breadcrumbs = {
+        'entity': entity,
+        'indexPath': path('norsys_banner_index'),
+        'indexLabel': 'norsys.banner.entity_plural_label'|trans,
+        'entityTitle': entity.title|default('N/A'|trans)
+    } %}
+
+    {{ parent() }}
+{% endblock pageHeader %}
+
+{% block content_data %}
+    {% import '@OroUI/macros.html.twig' as UI %}
+
+    {% set BannerInformation %}
+        <div class="row-fluid row-fluid-divider">
+            <div class="form-horizontal">
+                <div class="responsive-cell">
+                    {{ UI.renderProperty('norsys.banner.enabled.label'|trans, (entity.enabled) ? 'Yes'|trans : 'No'|trans) }}
+                    {{ UI.renderProperty('norsys.banner.priority.label'|trans, entity.priority) }}
+                    {{ UI.renderProperty('norsys.banner.title.label'|trans, entity.title) }}
+                    <div class="attribute-item">
+                        <div class="attribute-item__term">
+                            {{ 'norsys.banner.localized_contents.label'|trans }}
+                        </div>
+                        <div class="attribute-item__description">
+                            {{ entity.getDefaultLocalizedContent }}
+                        </div>
+                    </div>
+                    {{ UI.renderHtmlProperty('norsys.banner.localized_links.label'|trans, entity.getDefaultLocalizedLink|render_content|oro_html_sanitize) }}
+                    {{ UI.renderProperty('norsys.banner.start.label'|trans, entity.start|oro_format_datetime) }}
+                    {{ UI.renderProperty('norsys.banner.end.label'|trans, entity.end|oro_format_datetime) }}
+                </div>
+                <div class="responsive-cell">
+                    {{ UI.renderProperty('norsys.banner.homepage.label'|trans, (entity.homepage) ? 'Yes'|trans : 'No'|trans) }}
+                </div>
+            </div>
+        </div>
+    {% endset %}
+
+    {% set BannerRestriction %}
+        <div class="row-fluid form-horizontal">
+            <div class="responsive-block">
+                {{ scope.renderRestrictionsView(scopeEntities, entity.scopes) }}
+            </div>
+        </div>
+    {% endset %}
+
+    {% set dataBlocks = [
+        {
+            'title': 'oro.webcatalog.sections.general'|trans,
+            'subblocks': [{'data' : [BannerInformation]}]
+        },
+        {
+            'title': 'oro.cms.contentblock.sections.use_for.label'|trans,
+            'subblocks': [{'data' : [BannerRestriction]}]
+        }
+    ] %}
+
+    {% set id = 'banner-view' %}
+    {% set data = {'dataBlocks': dataBlocks} %}
+
+    {{ parent() }}
+{% endblock content_data %}

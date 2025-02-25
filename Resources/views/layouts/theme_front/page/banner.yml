@@ -1,0 +1,5 @@
+layout:
+    actions: []
+    imports:
+        -
+            id: norsys_banner

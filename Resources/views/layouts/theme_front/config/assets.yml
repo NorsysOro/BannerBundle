@@ -1,0 +1,4 @@
+styles:
+    inputs:
+        - 'bundles/norsysbanner/theme_front/scss/styles.scss'
+    output: 'css/styles.css'

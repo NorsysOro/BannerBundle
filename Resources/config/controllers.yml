@@ -1,0 +1,13 @@
+services:
+    _defaults:
+        public: true
+
+    Norsys\Bundle\BannerBundle\Controller\Admin\BannerController:
+        arguments:
+            - '@oro_scope.scope_manager'
+            - '@oro_form.update_handler'
+            - '@translator.default'
+        calls:
+            - [ 'setContainer', [ '@Psr\Container\ContainerInterface' ] ]
+        tags:
+            - { name: container.service_subscriber }

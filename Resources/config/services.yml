@@ -1,0 +1,19 @@
+services:
+    Norsys\Bundle\BannerBundle\Layout\DataProvider\BannerProvider:
+        arguments:
+            - '@oro_scope.scope_manager'
+            - '@oro_entity.doctrine_helper'
+            - 'cms_content_block'
+            - '@norsys.utils.cookie.service'
+        tags:
+            - { name: layout.data_provider, alias: norsys_banner.provider }
+
+    Norsys\Bundle\BannerBundle\Validator\Constraints\BannerDatesValidator:
+        public: true
+        tags:
+            - { name: validator.constraint_validator, alias: norsys_banner_dates_validator }
+
+    Norsys\Bundle\BannerBundle\Duplicator\BannerDuplicator:
+        public: true
+        arguments:
+            - '@oro_entity.doctrine_helper'

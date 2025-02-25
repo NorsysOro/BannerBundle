@@ -1,0 +1,42 @@
+norsys:
+    banner:
+        system_configuration:
+            fields:
+                banner_color:
+                    label: Couleur de la bannière
+                    tooltip: "Choisissez la valeur de la couleur de fond de la bannière (HEX, RGBA, etc.)"
+        close:
+            label: Fermer la bannière
+        duplicated:
+            message: Votre bannière a été dupliquée
+        ui:
+            duplicate: Dupliquer
+        start:
+            label: Date de Début
+        end:
+            label: Date de Fin
+        priority:
+            label: Priorité
+            tooltip: Plus le chiffre est grand, plus la priorité est importante.
+        scopes:
+            label: Restrictions
+            tooltip: Les restrictions que vous choisirez s'appliqueront à ces groupes.
+        homepage:
+            label: Homepage uniquement
+        enabled:
+            label: Activé
+        localized_contents:
+            label: Texte
+        localized_links:
+            label: Lien
+        id:
+            label: Id
+        title:
+            label: Titre
+        entity_plural_label: Bannières
+        entity_label: Bannière
+        entity_grid_all_view_label: Bannières
+        form:
+            update:
+                messages:
+                    saved: Votre bannière a été sauvegardée

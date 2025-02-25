@@ -1,0 +1,32 @@
+/* @theme: admin.oro; */
+
+@import '../blank/scss/variables/banner-config.scss';
+@import '../blank/scss/settings/utils';
+
+.norsys-banner {
+  &__admin {
+    &__color-picker {
+      width: 20px;
+      height: 20px;
+    }
+
+    &__icon {
+      font-size: 16px;
+    }
+
+    &__preview {
+      &__container {
+        @include banner-container;
+
+        p {
+          margin: 0;
+        }
+      }
+
+      &__icon {
+        margin: $banner-icon-margin;
+        font-size: $banner-icon-font-size;
+      }
+    }
+  }
+}

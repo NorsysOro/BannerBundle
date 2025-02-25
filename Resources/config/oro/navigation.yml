@@ -1,0 +1,16 @@
+navigation:
+    menu_config:
+        items:
+            banner_list:
+                label: 'norsys.banner.entity_label'
+                route: 'norsys_banner_index'
+                extras:
+                    routes: [ '/^norsys_banner/' ]
+                    position: 210
+
+        tree:
+            application_menu:
+                children:
+                    marketing_tab:
+                        children:
+                            banner_list: ~

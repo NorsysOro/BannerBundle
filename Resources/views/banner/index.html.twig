@@ -1,0 +1,18 @@
+{% extends '@OroUI/actions/index.html.twig' %}
+{% import '@OroUI/macros.html.twig' as UI %}
+
+{% set pageTitle = 'norsys.banner.entity_plural_label'|trans %}
+{% set gridName = 'banner-grid' %}
+
+{% block navButtons %}
+    {% import '@OroUI/macros.html.twig' as UI %}
+
+    {% if is_granted('norsys_banner_create') %}
+        <div class="btn-group">
+            {{ UI.addButton({
+                'path': path('norsys_banner_create'),
+                'entity_label': 'norsys.banner.entity_label'|trans
+            }) }}
+        </div>
+    {% endif %}
+{% endblock %}

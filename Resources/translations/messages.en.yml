@@ -1,0 +1,42 @@
+norsys:
+    banner:
+        system_configuration:
+            fields:
+                banner_color:
+                    label: Banner color
+                    tooltip: "Choose the banner background color (HEX, RGBA, etc.)"
+        close:
+            label: Close banner
+        duplicated:
+            message: Your banner has been duplicated
+        ui:
+            duplicate: Duplicate
+        start:
+            label: Start Time
+        priority:
+            label: Priority
+            tooltip: The larger the number, the higher the priority.
+        scopes:
+            label: Restrictions
+            tooltip: The restrictions you'll choose will apply to this groups
+        end:
+            label: End Time
+        homepage:
+            label: HomePage Only
+        enabled:
+            label: Enabled
+        localized_contents:
+            label: Text
+        localized_links:
+            label: Link
+        id:
+            label: Id
+        title:
+            label: Title
+        entity_plural_label: Banners
+        entity_label: Banner
+        entity_grid_all_view_label: Banners
+        form:
+            update:
+                messages:
+                    saved: Your banner has been saved

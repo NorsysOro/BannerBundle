@@ -1,0 +1,3 @@
+css:
+    inputs:
+        - 'bundles/norsysbanner/css/banner-admin.scss'

@@ -1,0 +1,6 @@
+norsys:
+    banner:
+        unique_banner_constraint:
+            error: There is already an active banner with these constraints
+        dates:
+            error: The end time has to be after the start time

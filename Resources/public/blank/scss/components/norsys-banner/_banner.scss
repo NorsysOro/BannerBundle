@@ -1,0 +1,30 @@
+/* @theme: blank; */
+
+@import '../../variables/banner-config.scss';
+@import '../../settings/utils';
+
+.norsys-banner {
+  width: 100%;
+  z-index: 5;
+
+  &__container {
+    @include banner-container;
+  }
+
+  &__link {
+    &:hover {
+      text-decoration: none;
+    }
+  }
+
+  &__icon {
+    margin: $banner-icon-margin;
+    font-size: $banner-icon-font-size;
+  }
+
+  &.sticky {
+    position: fixed;
+    top: 0;
+    box-shadow: $banner-box-shadow;
+  }
+}

@@ -1,0 +1,48 @@
+/* @theme: theme_front; */
+
+@import '../../variables/banner-config';
+
+.norsys-banner {
+    display: none;
+    position: relative;
+    top: 0;
+    box-shadow: $banner-box-shadow;
+    width: 100%;
+    z-index: 5;
+    padding: 15px 25px;
+
+    &__item-container {
+        width: 95%;
+        margin: auto;
+
+        &__item {
+            text-align: center;
+        }
+    }
+
+    &__close-container {
+        position: absolute;
+        top: 35%;
+        right: 25px;
+
+        &__close {
+            cursor: pointer;
+        }
+    }
+
+    &__link {
+        &:hover {
+            text-decoration: none;
+        }
+    }
+}
+
+@include breakpoint('tablet') {
+    .norsys-banner {
+        padding: 15px;
+
+        &__item-container {
+            width: 75%;
+        }
+    }
+}

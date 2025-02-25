@@ -1,0 +1,52 @@
+operations:
+    norsys_banner_duplicate:
+        label: norsys.banner.ui.duplicate
+        applications: [default]
+        routes:
+            - norsys_banner_view
+        datagrids:
+            - banner-grid
+        acl_resource: norsys_banner_create
+        order: 10
+        button_options:
+            icon: fa-files-o
+        actions:
+            - '@run_action_group':
+                  results:
+                      banner_copy_id: $.bannerCopy.id
+                  action_group: norsys_banner_duplicate
+                  parameters_mapping:
+                      data: $.data
+            - '@call_service_method':
+                  attribute: $.flashBag
+                  service: session
+                  method: getFlashBag
+            - '@call_method':
+                  attribute: $.hasSuccessMessage
+                  object: $.flashBag
+                  method: has
+                  method_parameters: ['success']
+            - '@flash_message':
+                  conditions:
+                      '@equal': [$.hasSuccessMessage, false]
+                  parameters:
+                      message: norsys.banner.duplicated.message
+                      type: 'success'
+            - '@redirect':
+                  route: norsys_banner_view
+                  route_parameters:
+                      id: $.banner_copy_id
+
+
+action_groups:
+    norsys_banner_duplicate:
+        parameters:
+            data:
+                type: Norsys\Bundle\BannerBundle\Entity\Banner
+        acl_resource: norsys_banner_create
+        actions:
+            - '@call_service_method':
+                  service: Norsys\Bundle\BannerBundle\Duplicator\BannerDuplicator
+                  method: duplicate
+                  method_parameters: [$.data]
+                  attribute: $.bannerCopy
