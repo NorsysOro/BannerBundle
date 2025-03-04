@@ -1,0 +1,15 @@
+system_configuration:
+    groups:
+        frn:
+            title: norsys.banner.system_configuration.groups.frn.title
+            icon:  'fa fa-eyedropper'
+
+    fields:
+        norsys_banner.banner_color:
+            data_type: string
+            type: Symfony\Component\Form\Extension\Core\Type\TextType
+            options:
+                label: norsys.banner.system_configuration.fields.banner_color.label
+                tooltip: norsys.banner.system_configuration.fields.banner_color.tooltip
+    
+

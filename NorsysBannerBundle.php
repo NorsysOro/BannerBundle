@@ -1,6 +1,6 @@
 <?php
 /**
- * @author tlefebvre@norsys.fr
+ * @author nverbeke@norsys.fr
  */
 
 declare(strict_types=1);

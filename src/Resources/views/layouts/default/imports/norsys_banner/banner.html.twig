@@ -1,0 +1,42 @@
+{% block _norsys_banner_widget %}
+    {% if messages is not empty %}
+        <div class="norsys-banner"
+             role="alert"
+             style="background-color: {{ oro_config_value('norsys_banner.banner_color') }};"
+             data-page-component-module="norsysbanner/default/js/app/views/norsys-banner/banner.js"
+             data-page-component-options="{{ {
+                 isSlider: messages|length > 1
+             }|json_encode }}"
+        >
+
+            <div class="norsys-banner__item-container" data-banner-container>
+                {% for message in messages %}
+                    {% set content = message.localizedContents|localized_value %}
+                    {% set localizedLink = message.localizedLinks|localized_value %}
+
+                    <div class="norsys-banner__item-container__item">
+                        {% if localizedLink is not empty %}
+                            <a class="norsys-banner__link"
+                               id="norsys_banner_link"
+                               href="{{ localizedLink }}"
+                               target="_default"
+                            >
+                                {{ content|raw }}
+                            </a>
+                        {% else %}
+                            {{ content|raw }}
+                        {% endif %}
+                    </div>
+                {% endfor %}
+            </div>
+            <div class="norsys-banner__close-container">
+                <img loading="lazy"
+                     src="{{ asset('/bundles/norsysbanner/default/images/svg/close-white.svg') }}"
+                     class="norsys-banner__close-container__close"
+                     alt="{{ "norsys.banner.close.label"|trans }}"
+                     data-banner-close
+                >
+            </div>
+        </div>
+    {% endif %}
+{% endblock %}

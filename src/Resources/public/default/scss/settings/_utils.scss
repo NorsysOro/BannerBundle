@@ -1,0 +1,12 @@
+/* @theme: default; */
+
+@import '../variables/banner-config.scss';
+
+@mixin banner-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 95%;
+  margin: auto;
+  padding: $banner-container-padding;
+}

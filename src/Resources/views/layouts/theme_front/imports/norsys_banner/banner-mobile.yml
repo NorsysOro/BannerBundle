@@ -1,0 +1,8 @@
+layout:
+    actions:
+        - '@move':
+              id: norsys_banner
+              parentId: page_header
+              siblingId: header_row
+              prepend: true
+    conditions: 'context["is_mobile"]'
