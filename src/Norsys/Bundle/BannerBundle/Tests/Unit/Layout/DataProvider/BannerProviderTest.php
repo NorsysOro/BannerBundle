@@ -1,7 +1,7 @@
 <?php
 
 /**
- * @author Nicolas VERBEKE <nverbeke@norsys.fr>
+ * @author Corentin Svoboda <csvoboda@norsys.fr>
  */
 
 declare(strict_types=1);
@@ -11,119 +11,115 @@ namespace Norsys\Bundle\BannerBundle\Tests\Unit\Layout\DataProvider;
 use Norsys\Bundle\BannerBundle\Entity\Banner;
 use Norsys\Bundle\BannerBundle\Layout\DataProvider\BannerProvider;
 use Norsys\Bundle\BannerBundle\Repository\BannerRepository;
-use Norsys\Bundle\BannerBundle\Service\Cookies\CookieService;
 use Oro\Bundle\EntityBundle\ORM\DoctrineHelper;
 use Oro\Bundle\ScopeBundle\Manager\ScopeManager;
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 
 class BannerProviderTest extends TestCase
 {
+    private ScopeManager $scopeManager;
     private DoctrineHelper $doctrineHelper;
-
+    private string $scopeType;
+    private RequestStack $requestStack;
     private BannerProvider $bannerProvider;
-
     private BannerRepository $bannerRepository;
-
-    private CookieService $cookieService;
 
     protected function setUp(): void
     {
-        $scopeManager = $this->createMock(ScopeManager::class);
-        $scopeType = 'cms_content_block';
-
+        $this->scopeManager = $this->createMock(ScopeManager::class);
         $this->doctrineHelper = $this->createMock(DoctrineHelper::class);
-        $this->bannerRepository = $this->createMock(BannerRepository::class);
-        $this->cookieService = $this->createMock(CookieService::class);
+        $this->scopeType = 'cms_content_block';
+        $this->requestStack = $this->createMock(RequestStack::class);
 
         $this->bannerProvider = new BannerProvider(
-            $scopeManager,
+            $this->scopeManager,
             $this->doctrineHelper,
-            $scopeType,
-            $this->cookieService
+            $this->scopeType,
+            $this->requestStack
         );
-    }
 
-    public function testNoBanner(): void
-    {
+        $this->bannerRepository = $this->createMock(BannerRepository::class);
+
         $this->doctrineHelper->expects($this->once())
             ->method('getEntityRepositoryForClass')
             ->with(Banner::class)
             ->willReturn($this->bannerRepository);
-
-        $this->bannerRepository->expects($this->once())
-            ->method('getActiveBanners')
-            ->willReturn([]);
-
-        $this->assertEmpty($this->bannerProvider->getActiveMessages());
     }
 
-    /**
-     * @dataProvider getBanners
-     */
-    public function testBanners(array $activeBanners, ?string $cookieTimestamp, bool $showBanner): void
+    public function testNotFindBanner(): void
     {
-        $this->doctrineHelper->expects($this->once())
-            ->method('getEntityRepositoryForClass')
-            ->with(Banner::class)
-            ->willReturn($this->bannerRepository);
-
         $this->bannerRepository->expects($this->once())
-            ->method('getActiveBanners')
-            ->willReturn($activeBanners);
+            ->method('getActiveBanner')
+            ->willReturn(null);
 
-        $this->cookieService->expects(self::once())
-            ->method('getCookieFromRequest')
-            ->with('closed_banner_date')
-            ->willReturn($cookieTimestamp);
+        $result = $this->bannerProvider->getActiveBanner();
 
-        $result = $this->bannerProvider->getActiveMessages();
-
-        $this->assertIsArray($result);
-
-        if (true === $showBanner) {
-            $this->assertNotEmpty($result);
-        } else {
-            $this->assertEmpty($result);
-        }
+        $this->assertNull($result);
     }
 
-    /**
-     * Timestamps in js format (ms).
-     */
-    public function getBanners(): array
-    {
-        $banner1 = $this->createBanner('banner1', new \DateTime('2023-10-27'));
-        $banner2 = $this->createBanner('banner2', new \DateTime('2023-10-28'));
-        $banner3 = $this->createBanner('banner3', new \DateTime('2023-11-01'));
-
-        $banners = [0 => $banner1, 1 => $banner2, 2 => $banner3];
-
-        return [
-            'closed before last banner was updated' => [
-                'banners' => $banners,
-                'dateClosed' => '1696111200000', // 2023-09-01
-                'showBanner' => true,
-            ],
-            'closed after last banner was updated' => [
-                'banners' => $banners,
-                'dateClosed' => '1702767600000', // 2023-11-17
-                'showBanner' => false,
-            ],
-            'never closed' => [
-                'banners' => $banners,
-                'dateClosed' => null,
-                'showBanner' => true,
-            ],
-        ];
-    }
-
-    private function createBanner(string $title, \DateTime $date): Banner
+    public function testFindBannerWithHomePageAndRouteHome(): void
     {
         $banner = new Banner();
-        $banner
-            ->setTitle($title)
-            ->setUpdatedAt($date);
+        $banner->setHomepage(true);
 
-        return $banner;
+        $this->bannerRepository->expects($this->once())
+            ->method('getActiveBanner')
+            ->willReturn($banner);
+
+        $request = $this->createMock(Request::class);
+
+        $this->requestStack->expects($this->once())
+            ->method('getCurrentRequest')
+            ->willReturn($request);
+
+        $request->expects($this->once())
+            ->method('get')
+            ->with('_route')
+            ->willReturn('oro_cms_frontend_page_view');
+
+        $result = $this->bannerProvider->getActiveBanner();
+
+        $this->assertEquals($banner, $result);
+    }
+
+    public function testFindBannerWithHomePageAndRouteNotHome(): void
+    {
+        $banner = new Banner();
+        $banner->setHomepage(true);
+
+        $this->bannerRepository->expects($this->once())
+            ->method('getActiveBanner')
+            ->willReturn($banner);
+
+        $request = $this->createMock(Request::class);
+
+        $this->requestStack->expects($this->once())
+            ->method('getCurrentRequest')
+            ->willReturn($request);
+
+        $request->expects($this->once())
+            ->method('get')
+            ->with('_route')
+            ->willReturn('other_route');
+
+        $result = $this->bannerProvider->getActiveBanner();
+
+        $this->assertNull($result);
+    }
+
+    public function testFindBannerWithNotHomePage(): void
+    {
+        $banner = new Banner();
+        $banner->setHomepage(false);
+
+        $this->bannerRepository->expects($this->once())
+            ->method('getActiveBanner')
+            ->willReturn($banner);
+
+        $result = $this->bannerProvider->getActiveBanner();
+
+        $this->assertEquals($banner, $result);
     }
 }

@@ -1,12 +1,5 @@
 norsys:
     banner:
-        system_configuration:
-            fields:
-                banner_color:
-                    label: Couleur de la bannière
-                    tooltip: "Choisissez la valeur de la couleur de fond de la bannière (HEX, RGBA, etc.)"
-        close:
-            label: Fermer la bannière
         duplicated:
             message: Votre bannière a été dupliquée
         ui:
@@ -21,10 +14,17 @@ norsys:
         scopes:
             label: Restrictions
             tooltip: Les restrictions que vous choisirez s'appliqueront à ces groupes.
+        sticky:
+            tooltip: La banniere reste affiché en haut de l'écran malgré le scroll.
+            label: Est Sticky
         homepage:
             label: Homepage uniquement
         enabled:
             label: Activé
+        icon:
+            label: Icône
+        backgroundcolor:
+            label: Couleur de Fond
         localized_contents:
             label: Texte
         localized_links:
@@ -37,6 +37,8 @@ norsys:
         entity_label: Bannière
         entity_grid_all_view_label: Bannières
         form:
+            preview:
+                label: Prévisualisation de la bannière
             update:
                 messages:
                     saved: Votre bannière a été sauvegardée

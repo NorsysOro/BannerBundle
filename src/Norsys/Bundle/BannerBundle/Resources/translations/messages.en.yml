@@ -23,6 +23,11 @@ norsys:
             label: End Time
         homepage:
             label: HomePage Only
+        backgroundcolor:
+            label: Background Color
+        sticky:
+            label: Sticky
+            tooltip: Check to stick the banner at the top of the page
         enabled:
             label: Enabled
         localized_contents:

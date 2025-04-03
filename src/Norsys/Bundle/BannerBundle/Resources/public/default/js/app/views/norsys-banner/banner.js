@@ -1,93 +1,63 @@
-import $ from 'jquery';
-import BaseView from 'oroui/js/app/views/base/view';
-import tools from 'oroui/js/tools';
+define(function (require) {
+    'use strict';
 
-require('slick');
+    const BaseView = require('oroui/js/app/views/base/view');
+    const NorsysBannerView = BaseView.extend({
+        initialize: function (options) {
+            NorsysBannerView.__super__.initialize.call(this, options);
+            this.$banner = options._sourceElement;
+            this.isSticky = options.isSticky;
+            this.oroMobilePanel = $('.sticky-panel--top');
 
-const NorsysBannerView = BaseView.extend({
-    autoplaySpeed: 4000,
-    speed: 1500,
+            this._activateSticky();
+        },
 
-    constructor: function NorsysBannerView(options) {
-        NorsysBannerView.__super__.constructor.call(this, options);
-    },
+        _activateSticky: function () {
+            if (this.isSticky) {
+                this._onWindowScroll();
+                this._onWindowLoad();
+            }
+        },
 
-    initialize: function(options) {
-        NorsysBannerView.__super__.initialize.call(this, options);
+        _onWindowScroll: function () {
+            const self = this;
+            const originalBannerPositionTop = this.$banner.offset().top;
 
-        this.$el = options._sourceElement;
-        this.isSlider = options.isSlider;
-        this.$isMobile = tools.isMobile();
+            $(window).on('scroll.' + this.cid, function () {
+                if ($(window).scrollTop() > originalBannerPositionTop) {
+                    self._setSticky();
+                }
 
-        this.$bannerContainer = $('[data-banner-container]');
-        this.$bannerCloseButton = $('[data-banner-close]');
-        this.$pageMainContent = $('.page-main__content');
-        this.$productText = $('#product-description');
-        this.$productTable = $('#technical-table');
+                if ($(window).scrollTop() < originalBannerPositionTop) {
+                    self._unsetSticky();
+                }
+            });
+        },
 
-        this._renderBanner();
-        this.updatePageContentStyle();
-    },
+        _onWindowLoad: function () {
+            const self = this;
+            $(window).on('load', function () {
+                self._setSticky();
+            });
+        },
 
-    _renderBanner: function() {
-        if (this.isSlider) {
-            this._initBannerSlider();
+        _setSticky: function () {
+            this.$banner.addClass('sticky');
+
+            if (this.oroMobilePanel.hasClass('has-content')) {
+                this.$banner.css('top', this.oroMobilePanel.height());
+            } else {
+                this.$banner.css('top', '0');
+            }
+
+            this.$banner.next('.page-area-container').css('margin-top', this.$banner.height());
+        },
+
+        _unsetSticky: function () {
+            this.$banner.removeClass('sticky');
+            this.$banner.next('.page-area-container').css('margin-top', '0');
         }
+    });
 
-        this._onCloseClick();
-    },
-
-    _onCloseClick: function() {
-        const self = this;
-
-        this.$bannerCloseButton.on('click.' + this.cid, function() {
-            self._closeBanner();
-            self.$productText.add(self.$productTable).removeClass('has-banner-offset');
-        });
-    },
-
-    _closeBanner: function() {
-        this.$el.remove();
-        this.createClosedCookie();
-        this.updatePageContentStyle();
-    },
-
-    _initBannerSlider: function() {
-        this.$bannerContainer.slick({
-            slidesToShow: 1,
-            arrows: false,
-            dots: false,
-            autoplay: true,
-            autoplaySpeed: this.autoplaySpeed,
-            speed: this.speed,
-            vertical: true,
-            verticalScrolling: true,
-            pauseOnHover: true,
-            pauseOnFocus: true,
-            draggable: false,
-            infinite: true,
-            adaptiveHeight: true
-        });
-    },
-
-    updatePageContentStyle: function() {
-        const $headerHeight = $('.page-header').outerHeight();
-        const $menuHeight = this.$isMobile ? 0 : $('[data-header-menu]').outerHeight() || 0;
-        const $marginWithBanner = $headerHeight + $menuHeight;
-
-        this.$pageMainContent.css('margin-top', `${$marginWithBanner}px`);
-        this.$productText.add(this.$productTable).addClass('has-banner-offset');
-    },
-
-    createClosedCookie: function() {
-        const now = new Date();
-
-        document.cookie = 'closed_banner_date=' + now.getTime() + '; expires=' + this.formatExpireDate(now);
-    },
-
-    formatExpireDate: function(now) {
-        return new Date(new Date(now).setDate(now.getDate() + 60)).toUTCString();
-    }
+    return NorsysBannerView;
 });
-
-export default NorsysBannerView;

@@ -9,13 +9,13 @@ declare(strict_types=1);
 namespace Norsys\Bundle\BannerBundle\Form;
 
 use Norsys\Bundle\BannerBundle\Entity\LocalizedBannerContent;
-use Norsys\Bundle\BannerBundle\Entity\LocalizedBannerLink;
 use Oro\Bundle\FormBundle\Form\Type\CheckboxType;
 use Oro\Bundle\FormBundle\Form\Type\OroDateTimeType;
 use Oro\Bundle\FormBundle\Form\Type\OroRichTextType;
 use Oro\Bundle\LocaleBundle\Form\Type\LocalizedFallbackValueCollectionType;
 use Oro\Bundle\ScopeBundle\Form\Type\ScopeCollectionType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ColorType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -50,15 +50,6 @@ class BannerType extends AbstractType
                         ],
                     ],
                     'use_tabs' => true,
-                ]
-            )
-            ->add(
-                'localizedLinks',
-                LocalizedFallbackValueCollectionType::class,
-                [
-                    'label' => 'norsys.banner.localized_links.label',
-                    'required' => false,
-                    'value_class' => LocalizedBannerLink::class,
                 ]
             )
             ->add(
@@ -99,6 +90,24 @@ class BannerType extends AbstractType
                     'tooltip' => 'norsys.banner.scopes.tooltip',
                 ]
             )
+            ->add(
+                'backgroundColor',
+                ColorType::class,
+                [
+                    'label' => 'norsys.banner.backgroundcolor.label',
+                    'attr' => [
+                        'class' => 'color-picker', // Ajout de la classe pour l'UI
+                    ],
+                    'required' => false,
+                ]
+            )
+            ->add(
+                'sticky', CheckboxType::class, [
+                'required' => false,
+                'tooltip' => 'norsys.banner.sticky.tooltip',
+                'label' => 'norsys.banner.sticky.label',
+            ])
+
             ->add('homepage', CheckboxType::class, [
                     'required' => false,
                     'label' => 'norsys.banner.homepage.label',

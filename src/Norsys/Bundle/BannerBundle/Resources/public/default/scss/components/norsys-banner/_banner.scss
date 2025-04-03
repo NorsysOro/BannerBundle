@@ -1,4 +1,4 @@
-/* @theme: theme_front; */
+/* @theme: default; */
 
 @import '../../variables/banner-config';
 
@@ -29,10 +29,8 @@
     }
   }
 
-  &__link {
-    &:hover {
+  a {
       text-decoration: none;
-    }
   }
 }
 

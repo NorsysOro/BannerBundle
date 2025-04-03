@@ -37,7 +37,6 @@ class NorsysBannerBundle implements Migration, ExtendExtensionAwareInterface, Co
     {
         $this->createBannerTable($schema);
         $this->createLocalizedBannerContentTable($schema);
-        $this->createLocalizedBannerLink($schema);
         $this->createBannerScopeTable($schema);
     }
 
@@ -57,7 +56,6 @@ class NorsysBannerBundle implements Migration, ExtendExtensionAwareInterface, Co
         $table->addColumn('end_at', 'datetime', ['notnull' => false]);
         $table->addColumn('homepage', 'boolean', ['notnull' => true, 'default' => false]);
         $table->addColumn('background_color', 'string', ['length' => 7, 'notnull' => false]);
-        $table->addColumn('icon', 'string', ['length' => 150, 'notnull' => false]);
         $table->addColumn('sticky', 'boolean', ['notnull' => true, 'default' => false]);
         $table->addColumn('enabled', 'boolean', ['notnull' => true, 'default' => false]);
         $table->addColumn('priority', 'integer', ['notnull' => true, 'default' => 0]);
@@ -83,36 +81,6 @@ class NorsysBannerBundle implements Migration, ExtendExtensionAwareInterface, Co
         $table->addColumn('text', 'text', ['notnull' => false]);
         $table->setPrimaryKey(['id']);
         $table->addIndex(['fallback'], 'idx_banner_content_fallback', []);
-
-        $table->addForeignKeyConstraint(
-            $schema->getTable('norsys_banner'),
-            ['banner_id'],
-            ['id'],
-            ['onUpdate' => null, 'onDelete' => 'CASCADE']
-        );
-        $table->addForeignKeyConstraint(
-            $schema->getTable('oro_localization'),
-            ['localization_id'],
-            ['id'],
-            ['onUpdate' => null, 'onDelete' => 'CASCADE']
-        );
-    }
-
-    /**
-     * @throws SchemaException
-     */
-    private function createLocalizedBannerLink(Schema $schema): void
-    {
-        $table = $schema->createTable('norsys_banner_link');
-
-        $table->addColumn('id', 'integer', ['autoincrement' => true]);
-        $table->addColumn('banner_id', 'integer', ['notnull' => false]);
-        $table->addColumn('localization_id', 'integer', ['notnull' => false]);
-        $table->addColumn('fallback', 'string', ['notnull' => false, 'length' => 64]);
-        $table->addColumn('string', 'string', ['notnull' => false]);
-        $table->setPrimaryKey(['id']);
-        $table->addIndex(['fallback'], 'idx_banner_link_fallback', []);
-        $table->addIndex(['string'], 'idx_banner_link_string', []);
 
         $table->addForeignKeyConstraint(
             $schema->getTable('norsys_banner'),

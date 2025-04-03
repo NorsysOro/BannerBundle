@@ -40,7 +40,6 @@ class LocalizedBannerLink extends AbstractLocalizedFallbackValue
 
     public function setBanner(Banner $banner): self
     {
-        /* @phpstan-ignore-next-line */
         $this->banner = $banner;
 
         return $this;

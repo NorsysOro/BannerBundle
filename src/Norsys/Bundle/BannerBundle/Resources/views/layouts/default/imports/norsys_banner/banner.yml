@@ -1,13 +1,13 @@
 layout:
-    actions:
-        - '@add':
-              blockType: block
-              parentId: page_header
-              id: norsys_banner
-              prepend: true
-              options:
-                  vars:
-                      messages: '=data["norsys_banner.provider"].getActiveMessages()'
-        
-        -   '@setBlockTheme':
-                themes: 'banner.html.twig'
+  actions:
+    - '@add':
+        blockType: block
+        parentId: page_header
+        id: norsys_banner
+        prepend: true
+        options:
+          vars:
+            banner: '=data["norsys_banner.provider"].getActiveBanner()'
+
+    -   '@setBlockTheme':
+          themes: 'banner.html.twig'

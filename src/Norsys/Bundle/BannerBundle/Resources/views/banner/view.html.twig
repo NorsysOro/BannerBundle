@@ -33,7 +33,6 @@
                             {{ entity.getDefaultLocalizedContent }}
                         </div>
                     </div>
-                    {{ UI.renderHtmlProperty('norsys.banner.localized_links.label'|trans, entity.getDefaultLocalizedLink|render_content|oro_html_sanitize) }}
                     {{ UI.renderProperty('norsys.banner.start.label'|trans, entity.start|oro_format_datetime) }}
                     {{ UI.renderProperty('norsys.banner.end.label'|trans, entity.end|oro_format_datetime) }}
                 </div>

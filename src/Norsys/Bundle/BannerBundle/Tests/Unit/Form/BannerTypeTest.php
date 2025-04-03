@@ -10,7 +10,6 @@ namespace Norsys\Bundle\BannerBundle\Tests\Unit\Form;
 
 use Norsys\Bundle\BannerBundle\Entity\Banner;
 use Norsys\Bundle\BannerBundle\Entity\LocalizedBannerContent;
-use Norsys\Bundle\BannerBundle\Entity\LocalizedBannerLink;
 use Norsys\Bundle\BannerBundle\Form\BannerType;
 use Oro\Bundle\FormBundle\Form\Type\CheckboxType;
 use Oro\Bundle\FormBundle\Form\Type\OroDateTimeType;
@@ -18,6 +17,7 @@ use Oro\Bundle\FormBundle\Form\Type\OroRichTextType;
 use Oro\Bundle\LocaleBundle\Form\Type\LocalizedFallbackValueCollectionType;
 use Oro\Bundle\ScopeBundle\Form\Type\ScopeCollectionType;
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\Form\Extension\Core\Type\ColorType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Validator\Constraints\Count;
@@ -46,7 +46,7 @@ class BannerTypeTest extends TestCase
             ->disableOriginalConstructor()
             ->getMock();
 
-        $builder->expects($this->exactly(9))
+        $builder->expects($this->exactly(10))
             ->method('add')
             ->withConsecutive(
                 [
@@ -67,15 +67,6 @@ class BannerTypeTest extends TestCase
                             ],
                         ],
                         'use_tabs' => true,
-                    ],
-                ],
-                [
-                    'localizedLinks',
-                    LocalizedFallbackValueCollectionType::class,
-                    [
-                        'label' => 'norsys.banner.localized_links.label',
-                        'required' => false,
-                        'value_class' => LocalizedBannerLink::class,
                     ],
                 ],
                 [
@@ -113,6 +104,25 @@ class BannerTypeTest extends TestCase
                         'required' => true,
                         'constraints' => [new Count(['min' => 1])],
                         'tooltip' => 'norsys.banner.scopes.tooltip',
+                    ],
+                ],
+                [
+                    'backgroundColor',
+                    ColorType::class,
+                    [
+                        'label' => 'norsys.banner.backgroundcolor.label',
+                        'attr' => [
+                            'class' => 'color-picker', // Ajout de la classe pour l'UI
+                        ],
+                        'required' => false,
+                    ],
+                ],
+                [
+                    'sticky',
+                    CheckboxType::class, [
+                        'required' => false,
+                        'tooltip' => 'norsys.banner.sticky.tooltip',
+                        'label' => 'norsys.banner.sticky.label',
                     ],
                 ],
                 [

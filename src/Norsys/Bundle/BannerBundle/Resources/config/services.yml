@@ -4,7 +4,7 @@ services:
             - '@oro_scope.scope_manager'
             - '@oro_entity.doctrine_helper'
             - 'cms_content_block'
-            - '@norsys.banner.cookie.service'
+            - '@request_stack'
         tags:
             - { name: layout.data_provider, alias: norsys_banner.provider }
 
@@ -17,7 +17,7 @@ services:
         public: true
         arguments:
             - '@oro_entity.doctrine_helper'
-            -
+
     norsys.banner.cookie.service:
         class: 'Norsys\Bundle\BannerBundle\Service\Cookies\CookieService'
         arguments:

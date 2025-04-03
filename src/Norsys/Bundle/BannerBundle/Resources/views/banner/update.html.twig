@@ -46,18 +46,19 @@
         {
             'title': 'oro.webcatalog.sections.general'|trans,
             'subblocks': [{
-                'title': '',
-                'data': [
-                    form_row(form.title),
-                    form_row(form.enabled),
-                    form_row(form.priority),
-                    form_row(form.localizedContents),
-                    form_row(form.localizedLinks),
-                    form_row(form.start),
-                    form_row(form.end),
-                    form_row(form.homepage)
-                ]
-            }]
+            'title': '',
+            'data': [
+                form_row(form.title),
+                form_row(form.enabled),
+                form_row(form.priority),
+                form_row(form.localizedContents),
+                form_row(form.start),
+                form_row(form.end),
+                form_row(form.backgroundColor),
+                form_row(form.homepage),
+                form_row(form.sticky),
+            ]
+        }]
         },
         {
             'title': 'oro.cms.contentblock.sections.use_for.label'|trans,

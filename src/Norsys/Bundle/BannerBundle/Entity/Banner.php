@@ -114,6 +114,24 @@ class Banner implements DatesAwareInterface, ExtendEntityInterface, Organization
     protected $homepage;
 
     /**
+     * @var string|null
+     */
+    #[ORM\Column(name: 'background_color', type: 'string', options: ['length' => 7], nullable: false)]
+    protected $backgroundColor;
+
+    /**
+     * @var string|null
+     */
+    #[ORM\Column(name: 'icon', type: 'string', options: ['length' => 150], nullable: false)]
+    protected $icon;
+
+    /**
+     * @var bool
+     */
+    #[ORM\Column(name: 'sticky', type: 'boolean', options: ['default' => false], nullable: false)]
+    protected $sticky;
+
+    /**
      * @var ArrayCollection|Scope[]
      */
     #[ORM\ManyToMany(targetEntity: "Oro\Bundle\ScopeBundle\Entity\Scope", fetch: 'EXTRA_LAZY')]
@@ -297,6 +315,48 @@ class Banner implements DatesAwareInterface, ExtendEntityInterface, Organization
     public function setEnd(?\DateTime $end): self
     {
         $this->end = $end;
+
+        return $this;
+    }
+
+    public function getBackgroundColor(): ?string
+    {
+        return $this->backgroundColor;
+    }
+
+    public function setBackgroundColor(?string $backgroundColor): self
+    {
+        $this->backgroundColor = $backgroundColor;
+
+        return $this;
+    }
+
+    public function getIcon(): ?string
+    {
+        return $this->icon;
+    }
+
+    /**
+     * @return $this
+     */
+    public function setIcon(?string $icon): self
+    {
+        $this->icon = $icon;
+
+        return $this;
+    }
+
+    public function isSticky(): ?bool
+    {
+        return $this->sticky;
+    }
+
+    /**
+     * @return $this
+     */
+    public function setSticky(bool $sticky): self
+    {
+        $this->sticky = $sticky;
 
         return $this;
     }
