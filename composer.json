@@ -1,21 +1,10 @@
 {
-    "name": "mon-projet/orocommerce",
-    "type": "project",
-    "require": {
-        "norsysoro/bannerbundle": "dev-main"
-    },
-    "repositories": [
-        {
-            "type": "vcs",
-            "url": "https://github.com/NorsysOro/BannerBundle"
-        }
-    ],
+    "name": "NorsysOro/BannerBundle",
+    "type": "orocommerce-bundle",
+    "license": "MIT",
     "autoload": {
         "psr-4": {
-            "App\\": "src/"
+            "Norsys\\BannerBundle\\": ""
         }
-    },
-    "minimum-stability": "dev",
-    "prefer-stable": true
+    }
 }
-
