@@ -43,7 +43,7 @@ Or create composer.json file and paste the content :
     "minimum-stability": "dev",
     "prefer-stable": true
 }
-``
+```
 ### 2. Enable the Bundle
 Register the bundle in your bundles.php file if not auto-registered:
 ```php
