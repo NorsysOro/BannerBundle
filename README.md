@@ -21,6 +21,29 @@ To include this bundle in your OroCommerce project using Composer, follow the st
 ```bash
 composer require norsysoro/bannerbundle:dev-main
 ```
+Or create composer.json file and paste the content : 
+```bash
+{
+    "name": "mon-projet/orocommerce",
+    "type": "project",
+    "require": {
+        "norsysoro/bannerbundle": "dev-main"
+    },
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/NorsysOro/BannerBundle"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "App\\": "src/"
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
+``
 ### 2. Enable the Bundle
 Register the bundle in your bundles.php file if not auto-registered:
 ```php
