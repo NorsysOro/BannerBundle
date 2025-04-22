@@ -18,16 +18,20 @@ This bundle has been tested on both the Community and Enterprise editions for th
 To include this bundle in your OroCommerce project using Composer, follow the steps below.
 
 ### 1. Require the Bundle
+```bash
 composer require norsysoro/bannerbundle:dev-main
-
+```
 ### 2. Enable the Bundle
 Register the bundle in your bundles.php file if not auto-registered:
+```php
 return [
     // Other bundles...
     Norsys\BannerBundle\NorsysOroBannerBundle::class => ['all' => true],
 ];
-
+```
 ### 3. Clear cache and install assets
+```bash
 php bin/console cache:clear
 php bin/console oro:assets:install
 php bin/console oro:platform:update --force --skip-search-reindexation --skip-download-translations --skip-translations
+```
