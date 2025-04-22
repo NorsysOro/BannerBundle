@@ -1,7 +1,7 @@
 NorsysBannerExtension v1.0
 ==============================
 
-What is the NorsysBannerExtension
+What is the NorsysBanner extension
 --------------------
 
 This bundle allow you to manage on or more banner and display them in the frontend according to your configuration. The aim is to be able to display messages to your customers, and decide who sees what, and when.
