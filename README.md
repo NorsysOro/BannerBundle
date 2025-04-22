@@ -13,17 +13,21 @@ Please see the OroCommerce online documentation for the complete list of [system
 
 This bundle has been tested on both the Community and Enterprise editions for the 4.2 and 5.0 versions
 
-Installation
-------------
+## 📦 Installation
 
-Composer only. If you don't know what composer is, please ask your DSI or developer team.
+To include this bundle in your OroCommerce project using Composer, follow the steps below.
 
-Resources
----------
+### 1. Require the Bundle
+composer require norsysoro/bannerbundle:dev-main
 
-  * A PDF functional documentation
+### 2. Enable the Bundle
+Register the bundle in your bundles.php file if not auto-registered:
+return [
+    // Other bundles...
+    Norsys\BannerBundle\NorsysOroBannerBundle::class => ['all' => true],
+];
 
-License
--------
- 
-[OSL-3.0](LICENSE) Copyright (c) 2022 - Norsys.
+### 3. Clear cache and install assets
+php bin/console cache:clear
+php bin/console oro:assets:install
+php bin/console oro:platform:update --force --skip-search-reindexation --skip-download-translations --skip-translations
